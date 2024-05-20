@@ -16,7 +16,7 @@ class Apartment(models.Model):
     number = models.CharField(max_length=255)
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
 
-class StudentData(models.Model):
+class Instructor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     ci = models.CharField(primary_key=True, max_length=255)
@@ -29,10 +29,10 @@ class Room(models.Model):
 class Student(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
 
-    student_id = models.CharField(max_length=255)
+    student_id = models.CharField(primary_key=True, max_length=255, )
     full_name = models.CharField(max_length=255)
-    username = models.CharField(max_length=255)
-    sex = models.CharField(max_length=255)
+    username = models.CharField(max_length=255, unique=True)
+    sex = models.CharField(max_length=1)
     career = models.CharField(max_length=255)
     faculty = models.CharField(max_length=255)
     year = models.IntegerField()
@@ -40,5 +40,5 @@ class Student(models.Model):
     municipality = models.CharField(max_length=255)
     quarters_date = models.DateField(null=True)
     photo = models.URLField(null=True)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True)
     
