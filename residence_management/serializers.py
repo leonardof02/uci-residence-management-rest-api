@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from residence_management.models import Apartment
+from residence_management.models.models import Apartment
 
 class ApartmentSerializer(serializers.ModelSerializer):
     class Meta:
