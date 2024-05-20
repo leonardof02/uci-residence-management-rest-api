@@ -3,14 +3,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Building(models.Model):
-    number = models.CharField(max_length=255, primary_key=True)
-    faculty = models.CharField(max_length=255)
+    number = models.CharField(max_length=3, primary_key=True)
+    faculty = models.CharField(max_length=30)
     year_of_students= models.IntegerField()
-    sex_of_students= models.CharField(max_length=255)
     block = models.IntegerField()
-    availability = models.BooleanField(max_length=255)
+    availability = models.BooleanField(default=True)
 
-    instructor_in_charge = models.ForeignKey(User, on_delete=models.CASCADE)
+    instructor_in_charge = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
 class Apartment(models.Model):
     number = models.CharField(max_length=255)
@@ -20,7 +19,7 @@ class Instructor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     ci = models.CharField(primary_key=True, max_length=255)
-    username = models.CharField(max_length=255)
+    username = models.CharField(max_length=255, unique=True)
 
 class Room(models.Model):
     total_capacity = models.IntegerField()
