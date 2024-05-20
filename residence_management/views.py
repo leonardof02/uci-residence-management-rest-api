@@ -1,6 +1,6 @@
 from rest_framework import generics
-from residence_management.models import Student, Building
-from .serializers import StudentSerializer, BuildingSerializer
+from residence_management.models import Student, Building, Apartment
+from .serializers import StudentSerializer, BuildingSerializer, ApartmentSerializer
 
 # Student Views
 class StudentList(generics.ListCreateAPIView):
@@ -19,3 +19,11 @@ class BuildingList(generics.ListCreateAPIView):
 class BuildingDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Building.objects.all()
     serializer_class = BuildingSerializer
+
+class ApartmentList(generics.ListCreateAPIView):
+    queryset = Apartment.objects.all()
+    serializer_class = ApartmentSerializer
+
+class ApartmentDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Apartment.objects.all()
+    serializer_class = ApartmentSerializer

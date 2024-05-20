@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Student, Building
+from .models import Student, Building, Apartment
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,7 +12,7 @@ class BuildingSerializer(serializers.ModelSerializer):
         model = Building 
         fields = "__all__"
 
-class ApartmentSerializer(serializers.Apartment):
+class ApartmentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Building 
+        model = Apartment 
         fields = "__all__"
