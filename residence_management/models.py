@@ -13,7 +13,7 @@ class Building(models.Model):
 
 class Apartment(models.Model):
     number = models.CharField(max_length=255)
-    building = models.ForeignKey(Building, on_delete=models.CASCADE)
+    building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name="apartments")
 
 class Instructor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -23,7 +23,7 @@ class Instructor(models.Model):
 
 class Room(models.Model):
     total_capacity = models.IntegerField()
-    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE)
+    apartment = models.ForeignKey(Apartment, on_delete=models.CASCADE, related_name="rooms")
 
 class Student(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
@@ -39,5 +39,5 @@ class Student(models.Model):
     municipality = models.CharField(max_length=255)
     quarters_date = models.DateField(null=True)
     photo = models.URLField(null=True)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, related_name="students")
     
