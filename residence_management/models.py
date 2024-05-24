@@ -18,6 +18,7 @@ class Apartment(models.Model):
 class Instructor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     ci = models.CharField(primary_key=True, max_length=255)
+    profile = models.ImageField(upload_to="media/profile_photos/", null=True)
 
 class Room(models.Model):
     total_capacity = models.IntegerField()
@@ -35,6 +36,6 @@ class Student(models.Model):
     province = models.CharField(max_length=255)
     municipality = models.CharField(max_length=255)
     quarters_date = models.DateField(null=True)
-    photo = models.URLField(null=True)
+    photo = models.ImageField(upload_to="media/profile_photos/", null=True)
     room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, related_name="students")
     

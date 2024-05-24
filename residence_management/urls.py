@@ -1,12 +1,11 @@
 from django.urls import path
-from .views import StudentList, StudentDetail, BuildingList, BuildingDetail, ApartmentList, ApartmentDetail, RoomList, RoomDetail, StudentAssignment, RegisterUser, LoginUser, WhoAmI
+from .views import StudentList, StudentDetail, BuildingList, BuildingDetail, ApartmentList, ApartmentDetail, RoomList, RoomDetail, StudentAssignment, RegisterUser, LoginUser
 
 urlpatterns = [
 
     # AUTH
     path('register/', RegisterUser.as_view(), name="register-user"),
     path('login/', LoginUser.as_view(), name="login-user"),
-    path('getuser/', WhoAmI.as_view(), name="get-user"),
     
     # CRUDS
     path('student/', StudentList.as_view(), name="student-list"),
