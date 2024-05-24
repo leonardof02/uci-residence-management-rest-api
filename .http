@@ -6,3 +6,10 @@ Content-Type: application/json
     "username": "leo",
     "password": "123"
 }
+
+### 
+@TOKEN = a65cbe7be58a3c4e9d934359c1a44deec7a5255c
+
+GET http://localhost:8000/api/getuser/
+Content-Type: application/json
+Authorization: Token {{TOKEN}}

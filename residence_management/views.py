@@ -1,49 +1,60 @@
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.request import Request
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 from residence_management.models import Student, Building, Apartment, Room
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
 from .serializers import StudentSerializer, BuildingSerializer, ApartmentSerializer, RoomSerializer, StudentAssignmentSerializer, UserSerializer
 from rest_framework.authtoken.models import Token
 
 # Student Views
 class StudentList(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
 class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
 # Building Views
 class BuildingList(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Building.objects.all()
     serializer_class = BuildingSerializer
 
 class BuildingDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Building.objects.all()
     serializer_class = BuildingSerializer
 
 # Apartment Views
 class ApartmentList(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Apartment.objects.all()
     serializer_class = ApartmentSerializer
 
 class ApartmentDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Apartment.objects.all()
     serializer_class = ApartmentSerializer
 
 # Room Views
 class RoomList(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
 
 class RoomDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
 
 class StudentAssignment(generics.GenericAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = StudentAssignmentSerializer
 
     def post(self, request):
@@ -89,11 +100,8 @@ class LoginUser(APIView):
             password=request.data['password']
         )
 
-        print(user)
-
         if not user:
             return Response({'error': 'Invalid credentials'}, status=401)
 
         token, created = Token.objects.get_or_create(user=user)
         return Response({'token': token.key})
-        
