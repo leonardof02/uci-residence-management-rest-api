@@ -17,9 +17,7 @@ class Apartment(models.Model):
 
 class Instructor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
     ci = models.CharField(primary_key=True, max_length=255)
-    username = models.CharField(max_length=255, unique=True)
 
 class Room(models.Model):
     total_capacity = models.IntegerField()
@@ -30,7 +28,6 @@ class Student(models.Model):
 
     student_id = models.CharField(primary_key=True, max_length=255, )
     full_name = models.CharField(max_length=255)
-    username = models.CharField(max_length=255, unique=True)
     sex = models.CharField(max_length=1)
     career = models.CharField(max_length=255)
     faculty = models.CharField(max_length=255)

@@ -1,7 +1,11 @@
 from rest_framework import generics
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.authentication import TokenAuthentication
 from residence_management.models import Student, Building, Apartment, Room
-from .serializers import StudentSerializer, BuildingSerializer, ApartmentSerializer, RoomSerializer, StudentAssignmentSerializer
+from django.contrib.auth import authenticate, login
+from .serializers import StudentSerializer, BuildingSerializer, ApartmentSerializer, RoomSerializer, StudentAssignmentSerializer, UserSerializer
+from rest_framework.authtoken.models import Token
 
 # Student Views
 class StudentList(generics.ListCreateAPIView):
@@ -43,24 +47,53 @@ class StudentAssignment(generics.GenericAPIView):
     serializer_class = StudentAssignmentSerializer
 
     def post(self, request):
-
         room_id = request.data.get("room_id")
         student_id = request.data.get("student_id")
 
-        room =  Room.objects.get(id=room_id)
-        student = Student.objects.get(student_id=student_id)
+        # Intenta obtener los objetos Room y Student
+        try:
+            room = Room.objects.get(id=room_id)
+            student = Student.objects.get(student_id=student_id)
+        except (Room.DoesNotExist, Student.DoesNotExist):
+            return Response({"error": "Room or Student not found"}, status=404)
 
-        students_in_room = Student.objects.filter(room=room)
-        is_this_student_in_that_room = students_in_room.filter(student_id=student_id).exists()
-
-        if(is_this_student_in_that_room):
+        # Verifica si el estudiante ya está en el cuarto
+        if Student.objects.filter(room=room, student_id=student_id).exists():
             return Response({"error": "Ese estudiante ya se encuentra en este cuarto"}, status=400)
 
+        # Verifica si el edificio está lleno
         if room.total_capacity <= 0:
             return Response({"error": "El edificio está lleno."}, status=400)
-        
+
+        # Asigna al estudiante al cuarto y guarda los cambios
         room.total_capacity -= 1
         student.room = room
         student.save()
         room.save()
+
         return Response({"message": f"Estudiante asignado exitosamente al apartamento: {room.apartment.building.number} {room.apartment.number}"}, status=200)
+
+class RegisterUser(generics.CreateAPIView):
+    serializer_class = UserSerializer
+
+class LoginUser(APIView):
+    authentication_classes = [TokenAuthentication]
+
+    def post(self, request):
+
+        print(f"Username: {request.data['username']}")
+        print(f"Password: {request.data['password']}")
+
+        user = authenticate(
+            username=request.data['username'],
+            password=request.data['password']
+        )
+
+        print(user)
+
+        if not user:
+            return Response({'error': 'Invalid credentials'}, status=401)
+
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({'token': token.key})
+        
