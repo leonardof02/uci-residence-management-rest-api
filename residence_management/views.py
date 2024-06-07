@@ -11,50 +11,50 @@ from rest_framework.authtoken.models import Token
 
 # Student Views
 class StudentList(generics.ListCreateAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
 class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
 # Building Views
 class BuildingList(generics.ListCreateAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Building.objects.all()
     serializer_class = BuildingSerializer
 
 class BuildingDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Building.objects.all()
     serializer_class = BuildingSerializer
 
 # Apartment Views
 class ApartmentList(generics.ListCreateAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Apartment.objects.all()
     serializer_class = ApartmentSerializer
 
 class ApartmentDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Apartment.objects.all()
     serializer_class = ApartmentSerializer
 
 # Room Views
 class RoomList(generics.ListCreateAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
 
 class RoomDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
 
 class StudentAssignment(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = StudentAssignmentSerializer
 
     def post(self, request):
@@ -91,10 +91,7 @@ class LoginUser(APIView):
     authentication_classes = [TokenAuthentication]
 
     def post(self, request):
-
-        print(f"Username: {request.data['username']}")
-        print(f"Password: {request.data['password']}")
-
+        
         user = authenticate(
             username=request.data['username'],
             password=request.data['password']
